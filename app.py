@@ -75,8 +75,8 @@ st.title("Green Flight Route Optimizer")
 
 segments = [
     ("Segment 1", "segment1_data.csv", 6000, 8000, 170000.0),
-    ("Segment 2", "segment2n3_data.csv", 8000, 10700, 170000.0),
-    ("Segment 3", "segment2n3_data.csv", 8000, 10700, 170000.0),
+    ("Segment 2", "segment2_data.csv", 8000, 10700, 170000.0),
+    ("Segment 3", "segment3_data.csv", 8000, 10700, 170000.0),
     ("Segment 4", "segment4_data.csv", 7500, 9000, 170000.0),
     ("Segment 5", "segment5_data.csv", 3000, 7500, 170000.0),
 ]
@@ -87,6 +87,8 @@ total_opt_fuel = 0.0
 total_opt_co2 = 0.0
 
 st.sidebar.header("Input Parameters")
+results = []
+
 for seg in segments:
     seg_name, csv_file, min_alt, max_alt, dist = seg
     st.sidebar.subheader(seg_name)
@@ -102,10 +104,11 @@ for seg in segments:
             total_unopt_co2 += result['unoptimized']['co2_kg']
             total_opt_fuel += result['optimized']['fuel_kg']
             total_opt_co2 += result['optimized']['co2_kg']
+            results.append(result)
 
-# Show totals
-if total_unopt_fuel > 0:
+# Show totals after all segments
+if results:
     st.header("Total Route Results")
     st.write(f"Unoptimized Route: Fuel = {total_unopt_fuel:.2f} kg, CO₂ = {total_unopt_co2:.2f} kg")
     st.write(f"Optimized Route: Fuel = {total_opt_fuel:.2f} kg, CO₂ = {total_opt_co2:.2f} kg")
-    st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co2:.2f} kg")
+    st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co
