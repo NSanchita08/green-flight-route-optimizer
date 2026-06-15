@@ -56,6 +56,7 @@ def run_segment(segment_name, csv_file, min_alt, max_alt, segment_dist_m,
         current_fuel = calculate_fuel(current_drag, current_time_s) if not np.isnan(current_time_s) else np.nan
         current_co2 = calculate_emission(current_fuel) if not np.isnan(current_fuel) else np.nan
 
+        # Show per-segment results immediately
         st.subheader(f"{segment_name} Results")
         st.write(f"Unoptimized fuel: {current_fuel:.2f} kg, CO₂: {current_co2:.2f} kg")
         st.write(f"Optimal altitude: {optimal_altitude_fuel} m")
@@ -81,34 +82,35 @@ segments = [
     ("Segment 5", "segment5_data.csv", 3000, 7500, 170000.0),
 ]
 
-total_unopt_fuel = 0.0
-total_unopt_co2 = 0.0
-total_opt_fuel = 0.0
-total_opt_co2 = 0.0
-
 st.sidebar.header("Input Parameters")
-results = []
 
-for seg in segments:
-    seg_name, csv_file, min_alt, max_alt, dist = seg
+# Collect inputs for all segments first
+inputs = []
+for seg_name, csv_file, min_alt, max_alt, dist in segments:
     st.sidebar.subheader(seg_name)
     alt = st.sidebar.number_input(f"{seg_name} Altitude (m)", min_value=min_alt, max_value=max_alt, value=min_alt)
     rho = st.sidebar.number_input(f"{seg_name} Air density (kg/m³)", value=1.225)
     wind = st.sidebar.number_input(f"{seg_name} Wind speed (km/h)", value=0.0)
     speed = st.sidebar.number_input(f"{seg_name} Aircraft speed (km/h)", value=800.0)
+    inputs.append((seg_name, csv_file, min_alt, max_alt, dist, alt, rho, wind, speed))
 
-    if st.sidebar.button(f"Run {seg_name}"):
-        result = run_segment(seg_name, csv_file, min_alt, max_alt, dist, alt, rho, wind, speed)
+# Run all segments together when user clicks
+if st.sidebar.button("Run All Segments"):
+    total_unopt_fuel = 0.0
+    total_unopt_co2 = 0.0
+    total_opt_fuel = 0.0
+    total_opt_co2 = 0.0
+
+    for seg in inputs:
+        result = run_segment(*seg)
         if result:
             total_unopt_fuel += result['unoptimized']['fuel_kg']
             total_unopt_co2 += result['unoptimized']['co2_kg']
             total_opt_fuel += result['optimized']['fuel_kg']
             total_opt_co2 += result['optimized']['co2_kg']
-            results.append(result)
 
-# Show totals after all segments
-if results:
+    # Show totals after all segments
     st.header("Total Route Results")
     st.write(f"Unoptimized Route: Fuel = {total_unopt_fuel:.2f} kg, CO₂ = {total_unopt_co2:.2f} kg")
     st.write(f"Optimized Route: Fuel = {total_opt_fuel:.2f} kg, CO₂ = {total_opt_co2:.2f} kg")
-    st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co2}")
+    st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co2:.2f} kg")
