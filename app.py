@@ -75,8 +75,8 @@ st.title("Green Flight Route Optimizer")
 
 segments = [
     ("Segment 1", "segment1_data.csv", 6000, 8000, 170000.0),
-    ("Segment 2", "segment2_data.csv", 8000, 10700, 170000.0),
-    ("Segment 3", "segment3_data.csv", 8000, 10700, 170000.0),
+    ("Segment 2", "segment2n3_data.csv", 8000, 10700, 170000.0),
+    ("Segment 3", "segment2n3_data.csv", 8000, 10700, 170000.0),
     ("Segment 4", "segment4_data.csv", 7500, 9000, 170000.0),
     ("Segment 5", "segment5_data.csv", 3000, 7500, 170000.0),
 ]
