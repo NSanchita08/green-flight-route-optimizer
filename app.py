@@ -122,7 +122,7 @@ if st.sidebar.button("Run All Segments"):
             total_opt_fuel += result['optimized']['fuel_kg']
             total_opt_co2 += result['optimized']['co2_kg']
 
-    # ✅ Totals must be indented here
+    # Totals must be indented here
     st.markdown(
         "<h2 style='color:#97D60E;'>Total Route Results</h2>",
         unsafe_allow_html=True
@@ -130,13 +130,3 @@ if st.sidebar.button("Run All Segments"):
     st.write(f"Unoptimized Route: Fuel = {total_unopt_fuel:.2f} kg, CO₂ = {total_unopt_co2:.2f} kg")
     st.write(f"Optimized Route: Fuel = {total_opt_fuel:.2f} kg, CO₂ = {total_opt_co2:.2f} kg")
     st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co2:.2f} kg")
-
-
-    # Show totals after all segments
-st.markdown(
-    "<h2 style='color:#97D60E;'>Total Route Results</h2>",
-    unsafe_allow_html=True
-)
-st.write(f"Unoptimized Route: Fuel = {total_unopt_fuel:.2f} kg, CO₂ = {total_unopt_co2:.2f} kg")
-st.write(f"Optimized Route: Fuel = {total_opt_fuel:.2f} kg, CO₂ = {total_opt_co2:.2f} kg")
-st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co2:.2f} kg")
