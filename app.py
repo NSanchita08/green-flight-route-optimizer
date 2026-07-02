@@ -81,12 +81,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Totals header
-st.markdown(
-    "<h2 style='color:#97D60E;'>Total Route Results</h2>",
-    unsafe_allow_html=True
-)
-
 segments = [
     ("Segment 1", "segment1_data.csv", 6000, 8000, 170000.0),
     ("Segment 2", "segment2n3_data.csv", 8000, 10700, 170000.0),
