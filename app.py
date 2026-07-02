@@ -57,7 +57,10 @@ def run_segment(segment_name, csv_file, min_alt, max_alt, segment_dist_m,
         current_co2 = calculate_emission(current_fuel) if not np.isnan(current_fuel) else np.nan
 
         # Show per-segment results immediately
-        st.subheader(f"{segment_name} Results")
+        st.markdown(
+            f"<h2 style='color:#97D60E;'>{segment_name} Results</h2>",
+            unsafe_allow_html=True
+        )
         st.write(f"Unoptimized fuel: {current_fuel:.2f} kg, CO₂: {current_co2:.2f} kg")
         st.write(f"Optimal altitude: {optimal_altitude_fuel} m")
         st.write(f"Optimized fuel: {min_fuel_value:.2f} kg, CO₂: {min_co2_value:.2f} kg")
@@ -72,9 +75,21 @@ def run_segment(segment_name, csv_file, min_alt, max_alt, segment_dist_m,
         return None
 
 # --- Streamlit UI ---
-st.title("Green Flight Route Optimizer")
+# Title
 st.markdown(
-    "<h1 style='background-color:#f0f0f0; color:#97D60E;'>Green Flight Route Optimizer</h1>",
+    "<h1 style='color:#97D60E;'>Green Flight Route Optimizer</h1>",
+    unsafe_allow_html=True
+)
+
+# Segment headers
+st.markdown(
+    f"<h2 style='color:#97D60E;'>{segment_name} Results</h2>",
+    unsafe_allow_html=True
+)
+
+# Totals header
+st.markdown(
+    "<h2 style='color:#97D60E;'>Total Route Results</h2>",
     unsafe_allow_html=True
 )
 
@@ -114,7 +129,10 @@ if st.sidebar.button("Run All Segments"):
             total_opt_co2 += result['optimized']['co2_kg']
 
     # Show totals after all segments
-    st.header("Total Route Results")
-    st.write(f"Unoptimized Route: Fuel = {total_unopt_fuel:.2f} kg, CO₂ = {total_unopt_co2:.2f} kg")
-    st.write(f"Optimized Route: Fuel = {total_opt_fuel:.2f} kg, CO₂ = {total_opt_co2:.2f} kg")
-    st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co2:.2f} kg")
+st.markdown(
+    "<h2 style='color:#97D60E;'>Total Route Results</h2>",
+    unsafe_allow_html=True
+)
+st.write(f"Unoptimized Route: Fuel = {total_unopt_fuel:.2f} kg, CO₂ = {total_unopt_co2:.2f} kg")
+st.write(f"Optimized Route: Fuel = {total_opt_fuel:.2f} kg, CO₂ = {total_opt_co2:.2f} kg")
+st.success(f"Fuel Saved = {total_unopt_fuel - total_opt_fuel:.2f} kg, CO₂ Reduced = {total_unopt_co2 - total_opt_co2:.2f} kg")
