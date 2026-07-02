@@ -73,6 +73,10 @@ def run_segment(segment_name, csv_file, min_alt, max_alt, segment_dist_m,
 
 # --- Streamlit UI ---
 st.title("Green Flight Route Optimizer")
+st.markdown(
+    "<h1 style='background-color:#f0f0f0; color:#97D60E;'>Green Flight Route Optimizer</h1>",
+    unsafe_allow_html=True
+)
 
 segments = [
     ("Segment 1", "segment1_data.csv", 6000, 8000, 170000.0),
