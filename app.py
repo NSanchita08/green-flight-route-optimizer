@@ -79,7 +79,7 @@ segments = [
     ("Segment 2", "segment2n3_data.csv", 8000, 10700, 170000.0),
     ("Segment 3", "segment2n3_data.csv", 8000, 10700, 170000.0),
     ("Segment 4", "segment4_data.csv", 7500, 9000, 170000.0),
-    ("Segment 5", "segment5_data.csv", 3000, 7500, 170000.0),
+    ("Segment 5", "segment5_data.csv", 0, 3000, 170000.0),
 ]
 
 st.sidebar.header("Input Parameters")
